@@ -59,6 +59,7 @@ h2 {
 
 /* 轉換以及下載按鈕 */
 li .convertBtn{
+    word-wrap: break-word;
     display: inline-block;
     padding: 0px 20px 0px 20px;
     background-color: rgb(76, 175, 84);
@@ -84,6 +85,16 @@ li .downloadBtn{
     height: 25px;
     line-height: 25px;
     margin-top: 2px;
+}
+/* 小螢幕btn */
+@media screen and (max-width: 800px) {
+    li .convertBtn{
+        word-wrap: break-word;
+        height: auto;
+    }
+    li .downloadBtn{
+        height: auto;
+    }
 }
 
 .convertBtn:hover {
@@ -147,7 +158,7 @@ li .downloadBtn{
 .video-li li{
     display: flex;
     justify-content: left;
-    height: 30px;
+    height: auto;
     text-align: left;
     font-weight: bold;
     border: 2px solid black;
@@ -157,4 +168,5 @@ li .downloadBtn{
 }
 .video-li li span{
     width: 650px;
+    word-wrap: break-word;
 }
