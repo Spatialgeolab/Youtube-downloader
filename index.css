@@ -11,6 +11,19 @@ header {
     padding: 10px;
     text-align: center;
 }
+.note{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.note span{
+    border: 2px solid #ccc;
+    padding: 10px;
+    background-color:#f0f0f0;
+    color: #333;
+    border-radius: 5px;
+
+}
 .url-form{
     display: flex;
     justify-content: center;
