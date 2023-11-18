@@ -12,12 +12,29 @@
     <meta property="og:description" content="採用Pytube提供Youtube轉換影片的小工具">
     <link rel="stylesheet" href="index.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.1/axios.min.js" integrity="sha512-m9S8W3a9hhBHPFAbEIaG7J9P92dzcAWwM42VvJp5n1/M599ldK6Z2st2SfJGsX0QR4LfCVr681vyU5vW8d218w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
 </head>
 <body>
+    <!-- fb SDK -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v18.0" nonce="qGRl2oma"></script>
     <header>
         <h1>Youtube影片下載</h1>
     </header>
     <div class="note"><span>目前僅提供網頁版連結下載如:https://www.youtube.com/watch?v=xxxxxxxxxxx</span></div>
+    <div class="note">
+        <span>
+            <h2>使用說明</h2>
+            <p>1.請在下方的輸入欄貼上要下載的影片網址，並按下「查詢」</p>
+            <p>2.選擇轉換的影片解析度或是音頻格式，並按下「轉換」</p>
+            <p>3.等待轉換進度結束後，按下「下載」即可</p>
+        </span>
+    </div>
+
+    <div class="share">
+        <div class="fb-share-button" data-href="https://www.spatialgeolab.com/Youtube-downloader/" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.spatialgeolab.com%2FYoutube-downloader%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">分享</a></div>
+        <div class="line-it-button" data-lang="zh_Hant" data-type="share-a" data-env="REAL" data-url="https://www.spatialgeolab.com/Youtube-downloader/" data-color="default" data-size="large" data-count="true" data-ver="3" style="display: none;"></div>
+    </div>
     <section>
         <h2>影片標題</h2>
         <form class="url-form" action="">
@@ -38,6 +55,11 @@
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     </script>
-    <script src="js/download.js"></script>
+    <script src="js/download.js"></script>  
 </body>
+<!-- 在 body 結尾處或適當位置添加以下代碼 -->
+<footer>
+    <p><a href="https://www.spatialgeolab.com/%e9%97%9c%e6%96%bc%e6%9c%ac%e7%ab%99/">關於本站</a></p>
+    <p><a href="https://www.spatialgeolab.com/%e9%9a%b1%e7%a7%81%e6%ac%8a%e6%94%bf%e7%ad%96/">隱私權政策</a></p>
+</footer>
 </html>
