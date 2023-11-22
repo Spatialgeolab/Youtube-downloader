@@ -36,9 +36,54 @@ queryinfoBtn.addEventListener("click", (e) => {
   onYouTubeIframeAPIReady(videoId);
   // 獲取查詢影片的基本資訊
   let divinfoRoot = document.querySelector(".videoInfo>ul");
+  // 透過事件委派在父元素添加監聽事件
+  divinfoRoot.addEventListener("click", (e) => {
+    if (e.target.tagName == "BUTTON") {
+      axios
+        .post("http://127.0.0.1:5000//download_video", {
+          url: url.value,
+          tag: e.target.value,
+        })
+        .then((res) => {
+          // 監聽SSE資料
+          const eventSource = new EventSource(
+            `http://127.0.0.1:5000//sse_progress?url=${url.value.slice(
+              -11
+            )}&tag=${e.target.value}`
+          );
+          // 生成轉換進度條
+          let progressElement = document.createElement("progress");
+          progressElement.setAttribute("class", "downloadProgress");
+          progressElement.value = 0;
+          progressElement.max = 100;
+          // 將轉換按鈕替換成進度條
+          e.target.parentNode.replaceChild(progressElement, e.target);
+          eventSource.onmessage = function (event) {
+            const progress = parseInt(event.data);
+            progressElement.value = progress;
+            if (progress === 100) {
+              // 轉換完成，生成下載按鈕
+              let downlaodBtn = document.createElement("a");
+              downlaodBtn.setAttribute("class", "downloadBtn");
+              downlaodBtn.innerText = "下載";
+              progressElement.parentNode.replaceChild(
+                downlaodBtn,
+                progressElement
+              );
+              downlaodBtn.href = `http://127.0.0.1:5000/download_complete?url=${url.value.slice(
+                -11
+              )}&tag=${e.target.value}`;
+            }
+          };
+          eventSource.onerror = function () {
+            eventSource.close();
+          };
+        });
+    }
+  });
   divinfoRoot.innerHTML = "讀取中請稍後.....";
   axios
-    .post("https://106.1.189.146:8080//video_info", {
+    .post("http://127.0.0.1:5000//video_info", {
       url: url.value,
     })
     .then((res) => {
@@ -56,46 +101,46 @@ queryinfoBtn.addEventListener("click", (e) => {
         }
         childbtn.innerText = "轉換";
         // 增加轉換按鈕的監聽事件
-        childbtn.addEventListener("click", (e) => {
-          axios
-            .post("https://106.1.189.146:8080//download_video", {
-              url: url.value,
-              tag: e.target.value,
-            })
-            .then((res) => {
-              const eventSource = new EventSource(
-                `https://106.1.189.146:8080/sse_progress?url=${url.value.slice(
-                  -11
-                )}&tag=${e.target.value}`
-              );
-              // 生成轉換進度條
-              let progressElement = document.createElement("progress");
-              progressElement.setAttribute("class", "downloadProgress");
-              progressElement.value = 0;
-              progressElement.max = 100;
-              e.target.parentNode.replaceChild(progressElement, e.target);
-              eventSource.onmessage = function (event) {
-                const progress = parseInt(event.data);
-                progressElement.value = progress;
-                if (progress === 100) {
-                  // 轉換完成，生成下載按鈕
-                  let downlaodBtn = document.createElement("a");
-                  downlaodBtn.setAttribute("class", "downloadBtn");
-                  downlaodBtn.innerText = "下載";
-                  progressElement.parentNode.replaceChild(
-                    downlaodBtn,
-                    progressElement
-                  );
-                  downlaodBtn.href = `https://106.1.189.146:8080/download_complete?url=${url.value.slice(
-                    -11
-                  )}&tag=${e.target.value}`;
-                }
-              };
-              eventSource.onerror = function () {
-                eventSource.close();
-              };
-            });
-        });
+        // childbtn.addEventListener("click", (e) => {
+        //   axios
+        //     .post("http://127.0.0.1:5000//download_video", {
+        //       url: url.value,
+        //       tag: e.target.value,
+        //     })
+        //     .then((res) => {
+        //       const eventSource = new EventSource(
+        //         `http://127.0.0.1:5000//sse_progress?url=${url.value.slice(
+        //           -11
+        //         )}&tag=${e.target.value}`
+        //       );
+        //       // 生成轉換進度條
+        //       let progressElement = document.createElement("progress");
+        //       progressElement.setAttribute("class", "downloadProgress");
+        //       progressElement.value = 0;
+        //       progressElement.max = 100;
+        //       e.target.parentNode.replaceChild(progressElement, e.target);
+        //       eventSource.onmessage = function (event) {
+        //         const progress = parseInt(event.data);
+        //         progressElement.value = progress;
+        //         if (progress === 100) {
+        //           // 轉換完成，生成下載按鈕
+        //           let downlaodBtn = document.createElement("a");
+        //           downlaodBtn.setAttribute("class", "downloadBtn");
+        //           downlaodBtn.innerText = "下載";
+        //           progressElement.parentNode.replaceChild(
+        //             downlaodBtn,
+        //             progressElement
+        //           );
+        //           downlaodBtn.href = `http://127.0.0.1:5000/download_complete?url=${url.value.slice(
+        //             -11
+        //           )}&tag=${e.target.value}`;
+        //         }
+        //       };
+        //       eventSource.onerror = function () {
+        //         eventSource.close();
+        //       };
+        //     });
+        // });
         child.innerHTML = `<span>影片編號: ${data[key]["itag"]} 影片類型: ${
           data[key]["mime_type"]
         } ${
