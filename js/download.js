@@ -3,6 +3,7 @@ let queryinfoBtn = document.getElementById("queryVideoInfo");
 let downloadButton = document.getElementsByClassName("download-button")[0];
 let url = document.getElementById("url-input");
 let reg = /v=(\w{11})/;
+let urlTemp = "https://www.youtube.com/watch?v=";
 // 添加監聽到查詢按鈕
 queryinfoBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -42,7 +43,7 @@ queryinfoBtn.addEventListener("click", (e) => {
     if (e.target.tagName == "BUTTON") {
       axios
         .post("https://106.1.189.146:8080//download_video", {
-          url: url.value,
+          url: urlTemp + videoId,
           tag: e.target.value,
         })
         .then((res) => {
