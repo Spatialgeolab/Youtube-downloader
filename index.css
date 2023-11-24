@@ -28,6 +28,11 @@ header {
     text-align: center;
 
 }
+
+/* 更新日誌 */
+.update-ul{
+    padding: 0 15px;
+}
 /* 分享按鈕 */
 .share {
     display: flex;
